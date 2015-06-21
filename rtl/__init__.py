@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
-from .reshaper import reshape
+from .reshaper import reshape, reshape_digits
 import sys
 from bidi.algorithm import get_display
 __author__ = 'vahid'
 __version__ = '0.1.3'
 
 
-def rtl(exp):
+def rtl(exp, digits=False):
     exp = reshape(exp)
     exp = get_display(exp)
+    if digits:
+        return reshape_digits(exp)
     return exp
 
 

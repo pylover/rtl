@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest
 from rtl import rtl
-
 __author__ = 'vahid'
 
 
@@ -19,6 +18,11 @@ class TestReshaper(unittest.TestCase):
 
         exp = rtl(self.expression_english)
         self.assertEqual(exp, self.expression_english)
+
+    def test_digits(self):
+        result = rtl('1234567890', digits=True)
+        expected = u'١٢٣٤٥٦٧٨٩٠'
+        self.assertEqual(result, expected)
 
 
 if __name__ == '__main__':

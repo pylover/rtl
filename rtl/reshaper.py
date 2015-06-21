@@ -332,3 +332,21 @@ def reshape_sentence(sentence):
                     mixed_words[j] = get_reshaped_word(mixed_words[j])
                 words[i] = u''.join(mixed_words)
     return u' '.join(words)
+
+DIGITS = [
+    (u'\u0030', u'\u0660'),
+    (u'\u0031', u'\u0661'),
+    (u'\u0032', u'\u0662'),
+    (u'\u0033', u'\u0663'),
+    (u'\u0034', u'\u0664'),
+    (u'\u0035', u'\u0665'),
+    (u'\u0036', u'\u0666'),
+    (u'\u0037', u'\u0667'),
+    (u'\u0038', u'\u0668'),
+    (u'\u0039', u'\u0669'),
+]
+
+def reshape_digits(expression):
+    for s, r in DIGITS:
+        expression = expression.replace(s, r)
+    return expression
