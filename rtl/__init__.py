@@ -3,7 +3,7 @@ from .reshaper import reshape, reshape_digits
 import sys
 from bidi.algorithm import get_display
 __author__ = 'vahid'
-__version__ = '0.1.3'
+__version__ = '0.2.0'
 
 
 def rtl(exp, digits=False):
