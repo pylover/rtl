@@ -25,12 +25,13 @@ setup(
     long_description=long_description,
     license='MIT',
     install_requires=['python-bidi'],
-    packages=['rtl'],
+    packages=find_packages(),
     entry_points={
         'console_scripts': [
             'rtl = rtl:main'
         ]
     },
+    test_suite = "rtl.tests",
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
@@ -39,6 +40,9 @@ setup(
         'Natural Language :: English',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
         'Topic :: Communications :: Email',
         'Topic :: Software Development :: Libraries',
         'Topic :: Utilities',
