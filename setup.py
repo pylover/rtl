@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 import os.path
 import re
 
-# reading isass version (same way sqlalchemy does)
+# reading the package version (same way sqlalchemy does)
 with open(os.path.join(os.path.dirname(__file__), 'rtl', '__init__.py')) as v_file:
     package_version = re.compile(r".*__version__ = '(.*?)'", re.S).match(v_file.read()).group(1)
 
@@ -31,7 +31,7 @@ setup(
             'rtl = rtl:main'
         ]
     },
-    test_suite = "rtl.tests",
+    test_suite="rtl.tests",
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
@@ -42,7 +42,9 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         'Topic :: Communications :: Email',
         'Topic :: Software Development :: Libraries',
         'Topic :: Utilities',
