@@ -7,7 +7,7 @@ from rtl.compat import pprint, process_streams
 from rtl.helpers import rtl
 from rtl.pretty_printer import PrettyRtlPrinter
 
-__version__ = '0.4.2-dev0'
+__version__ = '0.4.3'
 
 
 def write(s):
