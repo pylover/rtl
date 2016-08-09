@@ -2,8 +2,7 @@
 
 from pprint import PrettyPrinter
 
-from rtl.reshaper import reshape
-from bidi.algorithm import get_display
+from rtl import helpers
 
 
 class PrettyRtlPrinter(PrettyPrinter):
@@ -12,7 +11,6 @@ class PrettyRtlPrinter(PrettyPrinter):
         repr_string, isreadable, isrecursive = PrettyPrinter.format(self, obj, context, maxlevels, level)
 
         if isreadable:
-            repr_string = reshape(repr_string, digits=False)
-            repr_string = get_display(repr_string)
+            repr_string = helpers.rtl(repr_string)
 
         return repr_string, isreadable, isrecursive

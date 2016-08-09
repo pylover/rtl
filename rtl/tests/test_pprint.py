@@ -3,6 +3,7 @@ import unittest
 from rtl.pretty_printer import PrettyRtlPrinter
 import io
 import sys
+import warnings
 __author__ = 'vahid'
 
 
@@ -11,19 +12,20 @@ class TestPrettyPrint(unittest.TestCase):
     def test_pretty_printer(self):
 
         if sys.version_info < (3, 0):
-            raise Exception("This test is not supported on python<3.")
+            warnings.warn("pprint test is not supported on python<3.")
+            return
 
-        buffer = io.StringIO()
-        printer = PrettyRtlPrinter(stream=buffer)
+        output_buffer = io.StringIO()
+        printer = PrettyRtlPrinter(stream=output_buffer)
         printer.pprint({
             u'سلام': u'درود',
             u'خداحافظ': u'بدرود',
             u'صبح': u'سحر',
         })
 
-        buffer.seek(0)
+        output_buffer.seek(0)
         e = u"{'ﺮﺤﺳ' :'ﺢﺒﺻ' ,'ﺩﻭﺭﺩ' :'ﻡﻼﺳ' ,'ﺩﻭﺭﺪﺑ' :'ﻆﻓﺎﺣاﺪﺧ'}\n"
-        b = buffer.read()
+        b = output_buffer.read()
         self.assertEqual(b, e)
 
 
