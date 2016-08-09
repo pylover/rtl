@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
+
 from .pretty_printer import PrettyRtlPrinter
-__author__ = 'vahid'
 
 
 def pprint(obj, stream=None, indent=1, width=80, depth=None, compact=False):

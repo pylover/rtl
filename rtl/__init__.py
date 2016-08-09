@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
+
 from __future__ import print_function
-from rtl import reshaper
 import sys
+
 from bidi.algorithm import get_display
-__author__ = 'vahid'
+
+from rtl import reshaper
+
 __version__ = '0.4.2'
 
 
 def rtl(exp, reshape=True, bidi=True, digits=False):
 
     if reshape:
-        exp = reshaper.reshape(exp)
-        if digits:
-            return reshaper.reshape_digits(exp)
+        exp = reshaper.reshape(exp, digits=digits)
 
     if bidi:
         exp = get_display(exp)

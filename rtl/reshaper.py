@@ -2,11 +2,13 @@
 
 import re
 
+
 DEFINED_CHARACTERS_ORIGINAL_ALF_UPPER_MDD = u'\u0622'
 DEFINED_CHARACTERS_ORIGINAL_ALF_UPPER_HAMAZA = u'\u0623'
 DEFINED_CHARACTERS_ORIGINAL_ALF_LOWER_HAMAZA = u'\u0625'
 DEFINED_CHARACTERS_ORIGINAL_ALF = u'\u0627'
 DEFINED_CHARACTERS_ORIGINAL_LAM = u'\u0644'
+
 
 LAM_ALEF_GLYPHS = [
     [u'\u0622', u'\uFEF6', u'\uFEF5'],
@@ -14,6 +16,7 @@ LAM_ALEF_GLYPHS = [
     [u'\u0627', u'\uFEFC', u'\uFEFB'],
     [u'\u0625', u'\uFEFA', u'\uFEF9']
 ]
+
 
 HARAKAT = [
     u'\u0600', u'\u0601', u'\u0602', u'\u0603', u'\u0606', u'\u0607', u'\u0608', u'\u0609',
@@ -32,6 +35,7 @@ HARAKAT = [
     u'\uFE76', u'\uFE77', u'\uFE78', u'\uFE79', u'\uFE7A', u'\uFE7B', u'\uFE7C', u'\uFE7D',
     u'\uFE7E', u'\uFE7F', u'\uFC5E', u'\uFC5F', u'\uFC60', u'\uFC61', u'\uFC62', u'\uFC63'
 ]
+
 
 ARABIC_GLYPHS = {
     u'\u0622': [u'\u0622', u'\uFE81', u'\uFE81', u'\uFE82', u'\uFE82', 2],
@@ -82,6 +86,7 @@ ARABIC_GLYPHS = {
     u'\u06CC': [u'\u06CC', u'\uFEEF', u'\uFEF3', u'\uFEF4', u'\uFEF0', 4]
 }
 
+
 ARABIC_GLYPHS_LIST = [
     [u'\u0622', u'\uFE81', u'\uFE81', u'\uFE82', u'\uFE82', 2],
     [u'\u0623', u'\uFE83', u'\uFE83', u'\uFE84', u'\uFE84', 2],
@@ -128,6 +133,20 @@ ARABIC_GLYPHS_LIST = [
     [u'\u0686', u'\uFB7A', u'\uFB7C', u'\uFB7D', u'\uFB7B', 4],
     [u'\u06A9', u'\uFB8E', u'\uFB90', u'\uFB91', u'\uFB8F', 4],
     [u'\u06CC', u'\uFEEF', u'\uFEF3', u'\uFEF4', u'\uFEF0', 4]
+]
+
+
+DIGITS = [
+    (u'\u0030', u'\u0660'),
+    (u'\u0031', u'\u0661'),
+    (u'\u0032', u'\u0662'),
+    (u'\u0033', u'\u0663'),
+    (u'\u0034', u'\u0664'),
+    (u'\u0035', u'\u0665'),
+    (u'\u0036', u'\u0666'),
+    (u'\u0037', u'\u0667'),
+    (u'\u0038', u'\u0668'),
+    (u'\u0039', u'\u0669'),
 ]
 
 
@@ -180,6 +199,17 @@ def replace_lam_alef(unshaped_word):
     return u''.join(list_word).replace(u' ', u'')
 
 
+def replace_digits(expression):
+    result = u''
+
+    for c in expression:
+        o = c
+        for s, r in DIGITS:
+            o = o.replace(s, r)
+        result += o
+    return result
+
+
 def get_lam_alef(candidate_alef, candidate_lam, is_end_of_word):
     shift_rate = 1
     reshaped_lam_alef = u''
@@ -230,10 +260,12 @@ class DecomposedWord(object):
 def get_reshaped_word(unshaped_word):
     unshaped_word = replace_jalalah(unshaped_word)
     unshaped_word = replace_lam_alef(unshaped_word)
+
     decomposed_word = DecomposedWord(unshaped_word)
     result = u''
     if decomposed_word.stripped_regular_letters:
         result = reshape_it(u''.join(decomposed_word.stripped_regular_letters))
+
     return decomposed_word.reconstruct_word(result)
 
 
@@ -282,6 +314,13 @@ def has_arabic_letters(word):
     return False
 
 
+def has_digits(word):
+    for c in word:
+        if c.isdigit():
+            return True
+    return False
+
+
 def is_arabic_word(word):
     for c in word:
         if not is_arabic_character(c):
@@ -310,19 +349,22 @@ def get_words_from_mixed_word(word):
     return words
 
 
-def reshape(text):
+def reshape(text, digits=False):
     if text:
         lines = re.split('\\r?\\n', text)
         for i in range(len(lines)):
-            lines[i] = reshape_sentence(lines[i])
+            lines[i] = reshape_sentence(lines[i], digits=digits)
         return u'\n'.join(lines)
     return u''
 
 
-def reshape_sentence(sentence):
+def reshape_sentence(sentence, digits=False):
     words = get_words(sentence)
-    for i in range(len(words)):
-        word = words[i]
+    for i, word in enumerate(words):
+
+        if digits and has_digits(word):
+            words[i] = replace_digits(word)
+
         if has_arabic_letters(word):
             if is_arabic_word(word):
                 words[i] = get_reshaped_word(word)
@@ -331,22 +373,5 @@ def reshape_sentence(sentence):
                 for j in range(len(mixed_words)):
                     mixed_words[j] = get_reshaped_word(mixed_words[j])
                 words[i] = u''.join(mixed_words)
+
     return u' '.join(words)
-
-DIGITS = [
-    (u'\u0030', u'\u0660'),
-    (u'\u0031', u'\u0661'),
-    (u'\u0032', u'\u0662'),
-    (u'\u0033', u'\u0663'),
-    (u'\u0034', u'\u0664'),
-    (u'\u0035', u'\u0665'),
-    (u'\u0036', u'\u0666'),
-    (u'\u0037', u'\u0667'),
-    (u'\u0038', u'\u0668'),
-    (u'\u0039', u'\u0669'),
-]
-
-def reshape_digits(expression):
-    for s, r in DIGITS:
-        expression = expression.replace(s, r)
-    return expression
