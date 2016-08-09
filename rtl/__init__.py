@@ -1,18 +1,24 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-from .reshaper import reshape, reshape_digits
+from rtl import reshaper
 import sys
 from bidi.algorithm import get_display
 __author__ = 'vahid'
-__version__ = '0.4.0'
+__version__ = '0.4.2'
 
 
-def rtl(exp, digits=False):
-    exp = reshape(exp)
-    exp = get_display(exp)
-    if digits:
-        return reshape_digits(exp)
+def rtl(exp, reshape=True, bidi=True, digits=False):
+
+    if reshape:
+        exp = reshaper.reshape(exp)
+        if digits:
+            return reshaper.reshape_digits(exp)
+
+    if bidi:
+        exp = get_display(exp)
+
     return exp
+
 
 from .pretty_printer import PrettyRtlPrinter
 

@@ -17,3 +17,10 @@ PyPi
 ----
 
 https://pypi.python.org/pypi/rtl
+
+
+
+Change log
+----------
+
+[0.4.2] Optional bidi and or reshape parameters for rtl function
