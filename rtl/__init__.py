@@ -7,7 +7,7 @@ from bidi.algorithm import get_display
 
 from rtl import reshaper
 
-__version__ = '0.4.2'
+__version__ = '0.4.2-dev0'
 
 
 def rtl(exp, reshape=True, bidi=True, digits=False):
