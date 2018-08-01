@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 import re
 
@@ -375,3 +374,4 @@ def reshape_sentence(sentence, digits=False):
                 words[i] = u''.join(mixed_words)
 
     return u' '.join(words)
+

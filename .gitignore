@@ -54,7 +54,8 @@ docs/_build/
 # PyBuilder
 target/
 
-
 .idea
 
+.ropeproject
 .sass-cache
+

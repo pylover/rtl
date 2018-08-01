@@ -1,4 +1,3 @@
-
 from bidi.algorithm import get_display
 
 from rtl import reshaper
